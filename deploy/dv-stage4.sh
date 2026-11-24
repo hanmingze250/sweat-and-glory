@@ -23,7 +23,8 @@ echo "== 3. backup -> ${BAK} =="
 cp "$CONF" "$BAK" || { echo 'BACKUP-FAILED, abort'; exit 1; }
 
 echo '== 4. rewrite proxy_pass to FC =='
-sed -i 's|proxy_pass http://127\.0\.0\.1:8377;|proxy_pass https://'"${FC_HOST}"';|g' "$CONF"
+# Actual config lines carry a path suffix: proxy_pass http://127.0.0.1:8377/verify; (and /health)
+sed -i 's|proxy_pass http://127\.0\.0\.1:8377/verify;|proxy_pass https://'"${FC_HOST}"'/verify;|g; s|proxy_pass http://127\.0\.0\.1:8377/health;|proxy_pass https://'"${FC_HOST}"'/health;|g' "$CONF"
 CNT=$(grep -c "${FC_HOST}" "$CONF")
 echo "fcapp.run occurrences in config: ${CNT}"
 if [ "${CNT}" -lt 2 ]; then
