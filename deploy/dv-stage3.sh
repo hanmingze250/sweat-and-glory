@@ -3,7 +3,7 @@
 # jiangruansoft.com nginx server block (443). Safe: backs up first, restores
 # on any failure, only reloads after nginx -t passes.
 set -u
-CAND=$(grep -rl "jiangruansoft.com" /etc/nginx/sites-enabled /etc/nginx/conf.d /etc/nginx/nginx.conf 2>/dev/null)
+CAND=$(grep -rl "jiangruansoft.com" /etc/nginx/sites-enabled /etc/nginx/sites-available /etc/nginx/conf.d /etc/nginx/nginx.conf 2>/dev/null)
 echo "candidates:"
 echo "$CAND"
 N=$(printf "%s\n" "$CAND" | grep -c .)
